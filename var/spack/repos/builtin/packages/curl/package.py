@@ -52,6 +52,7 @@ class Curl(AutotoolsPackage):
     depends_on('nghttp2', when='+nghttp2')
     depends_on('libssh2', when='+libssh2')
     depends_on('libssh', when='+libssh')
+    patch('curl.patch')
 
     def configure_args(self):
         spec = self.spec

@@ -16,8 +16,10 @@ class Esmf(MakefilePackage):
 
     homepage = "https://www.earthsystemcog.org/projects/esmf/"
     url      = "http://www.earthsystemmodeling.org/esmf_releases/non_public/ESMF_7_0_1/esmf_7_0_1_src.tar.gz"
+#   url      = "file:///discover/nobackup/mapotts1/esmf-7.0.1m.tar.gz"
 
     version('7.0.1', 'd3316ea79b032b8fb0cd40e5868a0261')
+    version('7.0.1m', '9c7034ec77fd143384691e6591a4c5cc')
 
     variant('mpi',     default=True,  description='Build with MPI support')
     variant('lapack',  default=True,  description='Build with LAPACK support')
@@ -114,6 +116,7 @@ class Esmf(MakefilePackage):
 
         if '+mpi' in spec:
             os.environ['ESMF_CXX'] = spec['mpi'].mpicxx
+#           os.environ['ESMF_CXX'] = os.environ['MPI_CXX']
             os.environ['ESMF_F90'] = spec['mpi'].mpifc
         else:
             os.environ['ESMF_CXX'] = os.environ['CXX']
@@ -153,6 +156,8 @@ class Esmf(MakefilePackage):
             # Force use of the single-processor MPI-bypass library.
             os.environ['ESMF_COMM'] = 'mpiuni'
 
+#       os.environ['ESMF_COMPILER'] = 'intel'
+#       os.environ['ESMF_COMM'] = 'intelmpi'
         ##########
         # LAPACK #
         ##########

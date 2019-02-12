@@ -45,11 +45,11 @@ class Cdo(AutotoolsPackage):
     variant('magics', default=False,
             description='Enable Magics library support')
     variant('openmp', default=True, description='Enable OpenMP support')
-
+    patch('cdo.patch')
     depends_on('netcdf', when='+netcdf')
     # In this case CDO does not depend on hdf5 directly but we need the backend
     # of netcdf to be thread safe.
-    depends_on('hdf5+threadsafe', when='+netcdf')
+#   depends_on('hdf5+threadsafe', when='+netcdf')
 
     depends_on('grib-api', when='grib2=grib-api')
     depends_on('eccodes', when='grib2=eccodes')
