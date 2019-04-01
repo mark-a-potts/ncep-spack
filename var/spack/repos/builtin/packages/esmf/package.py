@@ -46,22 +46,23 @@ class Esmf(MakefilePackage):
 
     # Make esmf build with newer gcc versions
     # https://sourceforge.net/p/esmf/esmf/ci/3706bf758012daebadef83d6575c477aeff9c89b/
-    patch('gcc.patch', when='@:7.0.99 %gcc@6:')
+#   patch('gcc.patch', when='@:7.0.99 %gcc@6:')
 
     # Fix undefined reference errors with mvapich2
     # https://sourceforge.net/p/esmf/esmf/ci/34de0ccf556ba75d35c9687dae5d9f666a1b2a18/
-    patch('mvapich2.patch', when='@:7.0.99')
+#   patch('mvapich2.patch', when='@:7.0.99')
 
     # Allow different directories for creation and
     # installation of dynamic libraries on OSX:
-    patch('darwin_dylib_install_name.patch', when='platform=darwin')
+#   patch('darwin_dylib_install_name.patch', when='platform=darwin')
 
     # Make script from mvapich2.patch executable
-    @run_before('build')
-    @when('@:7.0.99')
-    def chmod_scripts(self):
-        chmod = which('chmod')
-        chmod('+x', 'scripts/libs.mvapich2f90')
+#   @run_before('build')
+#   @when('@:7.0.99')
+#   def chmod_scripts(self):
+#       return
+#       chmod = which('chmod')
+#       chmod('+x', 'scripts/libs.mvapich2f90')
 
     def url_for_version(self, version):
         return "http://www.earthsystemmodeling.org/esmf_releases/non_public/ESMF_{0}/esmf_{0}_src.tar.gz".format(version.underscored)
@@ -156,8 +157,8 @@ class Esmf(MakefilePackage):
             # Force use of the single-processor MPI-bypass library.
             os.environ['ESMF_COMM'] = 'mpiuni'
 
-#       os.environ['ESMF_COMPILER'] = 'intel'
-#       os.environ['ESMF_COMM'] = 'intelmpi'
+        os.environ['ESMF_COMPILER'] = 'intel'
+        os.environ['ESMF_COMM'] = 'intelmpi'
         ##########
         # LAPACK #
         ##########
@@ -166,7 +167,8 @@ class Esmf(MakefilePackage):
             # A system-dependent external LAPACK/BLAS installation is used
             # to satisfy the external dependencies of the LAPACK-dependent
             # ESMF code.
-            os.environ['ESMF_LAPACK'] = 'system'
+#           os.environ['ESMF_LAPACK'] = 'system'
+            os.environ['ESMF_LAPACK'] = 'internal'
 
             # FIXME: determine whether or not we need to set this
             # Specifies the path where the LAPACK library is located.
@@ -177,7 +179,7 @@ class Esmf(MakefilePackage):
             os.environ['ESMF_LAPACK_LIBS'] = spec['lapack'].libs.link_flags  # noqa
         else:
             # Disables LAPACK-dependent code.
-            os.environ['ESMF_LAPACK'] = 'OFF'
+            os.environ['ESMF_LAPACK'] = 'internal'
 
         ##########
         # NetCDF #
