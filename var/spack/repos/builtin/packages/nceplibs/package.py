@@ -11,11 +11,11 @@
 # next to all the things you'll want to change. Once you've handled
 # them, you can save this file and test your package like this:
 #
-#     spack install nemsio
+#     spack install nceplibs
 #
 # You can edit this file again by typing:
 #
-#     spack edit nemsio
+#     spack edit nceplibs
 #
 # See the Spack documentation for more information on packaging.
 # ----------------------------------------------------------------------------
@@ -23,19 +23,19 @@
 from spack import *
 
 
-class Nemsio(CMakePackage):
+class Nceplibs(CMakePackage):
     """FIXME: Put a proper description of your package here."""
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://www.example.com"
-    git      = "gerrit:NCEPLIBS-nemsio"
+    git = "gerrit:NCEPLIBS"
 
     # FIXME: Add proper versions and checksums here.
     # version('1.2.3', '0123456789abcdef0123456789abcdef')
-    version('v2.2.3',  branch='spack-build')
+    version('v1.0',  branch='spack-build',submodules=True)
 
     # FIXME: Add dependencies if required.
-    depends_on('mpi')
+    # depends_on('foo')
 
     def cmake_args(self):
         # FIXME: Add arguments other than
