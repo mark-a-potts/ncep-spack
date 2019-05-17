@@ -158,7 +158,8 @@ class Esmf(MakefilePackage):
             os.environ['ESMF_COMM'] = 'mpiuni'
 
 #       os.environ['ESMF_COMPILER'] = 'intel'
-#       os.environ['ESMF_COMM'] = 'intelmpi'
+        os.environ['ESMF_COMM'] = 'intelmpi'
+        os.environ['ESMF_COMM'] = 'mvapich2'
         ##########
         # LAPACK #
         ##########

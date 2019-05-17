@@ -36,6 +36,12 @@ class W3emc(CMakePackage):
 
     # FIXME: Add dependencies if required.
     depends_on('sigio')
+    depends_on('bufr')
+    depends_on('bacio')
+    depends_on('sfcio')
+    depends_on('nemsio')
+    depends_on('sp')
+    depends_on('w3nco')
 
     def cmake_args(self):
         # FIXME: Add arguments other than
