@@ -11,11 +11,11 @@
 # next to all the things you'll want to change. Once you've handled
 # them, you can save this file and test your package like this:
 #
-#     spack install bufr
+#     spack install prod-util
 #
 # You can edit this file again by typing:
 #
-#     spack edit bufr
+#     spack edit prod-util
 #
 # See the Spack documentation for more information on packaging.
 # ----------------------------------------------------------------------------
@@ -23,24 +23,22 @@
 from spack import *
 
 
-class Bufr(CMakePackage):
+class ProdUtil(CMakePackage):
     """FIXME: Put a proper description of your package here."""
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://www.example.com"
-    git      = "gerrit:NCEPLIBS-bufr"
+    git      = "gerrit:NCEPLIBS-prod_util"
 
     # FIXME: Add proper versions and checksums here.
-    # version('1.2.3', '0123456789abcdef0123456789abcdef')
-    version('v11.2.0',  branch='spack-build')
+    version('1.0.18', branch='spack-build')
 
     # FIXME: Add dependencies if required.
-    # depends_on('foo')
-    parallel = False
+    depends_on('w3nco')
 
     def cmake_args(self):
         # FIXME: Add arguments other than
         # FIXME: CMAKE_INSTALL_PREFIX and CMAKE_BUILD_TYPE
         # FIXME: If not needed delete this function
-        args = ['-DCMAKE_BUILD_TYPE=RELEASE','-DGSIBUILD=FALSE']
+        args = []
         return args

@@ -127,19 +127,19 @@ class Netcdf(AutotoolsPackage):
     conflicts('+parallel-netcdf', when='@:4.0')
     conflicts('+hdf4', when='@:4.0')
 
-    def patch(self):
-        try:
-            max_dims = int(self.spec.variants['maxdims'].value)
-            max_vars = int(self.spec.variants['maxvars'].value)
-        except (ValueError, TypeError):
-            raise TypeError('NetCDF variant values max[dims|vars] must be '
-                            'integer values.')
+#   def patch(self):
+#       try:
+#           max_dims = int(self.spec.variants['maxdims'].value)
+#           max_vars = int(self.spec.variants['maxvars'].value)
+#       except (ValueError, TypeError):
+#           raise TypeError('NetCDF variant values max[dims|vars] must be '
+#                           'integer values.')
 
-        ff = FileFilter(join_path('include', 'netcdf.h'))
-        ff.filter(r'^(#define\s+NC_MAX_DIMS\s+)\d+(.*)$',
-                  r'\1{0}\2'.format(max_dims))
-        ff.filter(r'^(#define\s+NC_MAX_VARS\s+)\d+(.*)$',
-                  r'\1{0}\2'.format(max_vars))
+#       ff = FileFilter(join_path('include', 'netcdf.h'))
+#       ff.filter(r'^(#define\s+NC_MAX_DIMS\s+)\d+(.*)$',
+#                 r'\1{0}\2'.format(max_dims))
+#       ff.filter(r'^(#define\s+NC_MAX_VARS\s+)\d+(.*)$',
+#                 r'\1{0}\2'.format(max_vars))
 
     def configure_args(self):
         cflags = []
