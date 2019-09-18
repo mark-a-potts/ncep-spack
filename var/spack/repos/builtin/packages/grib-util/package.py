@@ -36,10 +36,10 @@ class GribUtil(CMakePackage):
 
     # FIXME: Add dependencies if required.
     depends_on('lapack')
+    depends_on('w3nco')
     depends_on('jasper')
     depends_on('libpng')
     depends_on('zlib')
-    depends_on('w3nco')
     depends_on('g2')
     depends_on('bacio')
     depends_on('ip')

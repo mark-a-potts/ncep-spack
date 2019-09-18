@@ -35,7 +35,11 @@ class Gfsio(CMakePackage):
     version('v1.1.0',  branch='spack-build')
 
     # FIXME: Add dependencies if required.
-    # depends_on('foo')
+    depends_on('ip')
+    depends_on('ip2')
+    depends_on('nemsiogfs')
+    depends_on('prod-util')
+    depends_on('crtm')
 
     def cmake_args(self):
         # FIXME: Add arguments other than
