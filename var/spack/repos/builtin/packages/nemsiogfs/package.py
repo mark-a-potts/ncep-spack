@@ -28,10 +28,10 @@ class Nemsiogfs(CMakePackage):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://www.example.com"
-    git      = "gerrit:NCEPLIBS-nemsiogfs"
+    git      = "git@github.com:NOAA-EMC/NCEPLIBS-nemsiogfs"
 
     # FIXME: Add proper versions and checksums here.
-    version('2.2.1', branch='spack-build')
+    version('2.2.1', branch='release/public-v1',submodules=True)
 
     # FIXME: Add dependencies if required.
     depends_on('nemsio')

@@ -28,10 +28,10 @@ class G2(CMakePackage):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://www.example.com"
-    git      = "gerrit:NCEPLIBS-g2"
+    git      = "git@github.com:kgerheiser/NCEPLIBS-g2"
 
     # FIXME: Add proper versions and checksums here.
-    version('v3.1.0', branch='spack-build')
+    version('v3.1.0', branch='ufs_release_v1.0')
 
     # FIXME: Add dependencies if required.
     depends_on('jasper')

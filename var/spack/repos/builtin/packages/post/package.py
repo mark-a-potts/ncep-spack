@@ -28,11 +28,11 @@ class Post(CMakePackage):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://www.example.com"
-    git = "gerrit:EMC_post"
+    git = "git@github.com:NOAA-EMC/EMC_post"
 
     # FIXME: Add proper versions and checksums here.
     # version('1.2.3', '0123456789abcdef0123456789abcdef')
-    version('8.1.0', branch='spack-build', submodules=False)
+    version('8.1.0', branch='release/public-v1', submodules=False)
 
     # FIXME: Add dependencies if required.
     depends_on('hdf5+cxx+fortran+hl+mpi')

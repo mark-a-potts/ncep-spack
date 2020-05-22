@@ -157,8 +157,8 @@ class Esmf(MakefilePackage):
             # Force use of the single-processor MPI-bypass library.
             os.environ['ESMF_COMM'] = 'mpiuni'
 
-        os.environ['ESMF_COMPILER'] = 'intel'
-        os.environ['ESMF_COMM'] = 'intelmpi'
+#       os.environ['ESMF_COMPILER'] = 'intel'
+#       os.environ['ESMF_COMM'] = 'intelmpi'
 #       os.environ['ESMF_COMM'] = 'mvapich2'
         ##########
         # LAPACK #

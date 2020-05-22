@@ -28,15 +28,16 @@ class W3emc(CMakePackage):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://www.example.com"
-    git      = "gerrit:NCEPLIBS-w3emc"
+    git      = "git@github.com:NOAA-EMC/NCEPLIBS-w3emc"
 
     # FIXME: Add proper versions and checksums here.
     # version('1.2.3', '0123456789abcdef0123456789abcdef')
-    version('v2.2.0',  branch='spack-build')
+    version('v2.5.0',  branch='release/public-v1')
 
     # FIXME: Add dependencies if required.
     depends_on('sigio')
     depends_on('bufr')
+    depends_on('crtm')
     depends_on('bacio')
     depends_on('sfcio')
     depends_on('nemsio')

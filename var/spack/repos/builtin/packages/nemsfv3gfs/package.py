@@ -28,7 +28,7 @@ class Nemsfv3gfs(CMakePackage):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://www.example.com"
-    git = "gerrit:NEMSfv3gfs"
+    git = "git@github.com:NOAA-EMC/NEMSfv3gfs"
 
     # FIXME: Add proper versions and checksums here.
     version('1.0.0c', branch='cmake', submodules=True)
