@@ -1,4 +1,4 @@
-# Copyright 2013-2018 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -24,6 +24,21 @@ class Git(AutotoolsPackage):
     # You can find the source here: https://mirrors.edge.kernel.org/pub/software/scm/git/sha256sums.asc
 
     releases = [
+        {
+            'version': '2.25.0',
+            'sha256': 'a98c9b96d91544b130f13bf846ff080dda2867e77fe08700b793ab14ba5346f6',
+            'sha256_manpages': '22b2380842ef75e9006c0358de250ead449e1376d7e5138070b9a3073ef61d44'
+        },
+        {
+            'version': '2.21.0',
+            'sha256': '85eca51c7404da75e353eba587f87fea9481ba41e162206a6f70ad8118147bee',
+            'sha256_manpages': '14c76ebb4e31f9e55cf5338a04fd3a13bced0323cd51794ccf45fc74bd0c1080'
+        },
+        {
+            'version': '2.20.1',
+            'sha256': 'edc3bc1495b69179ba4e272e97eff93334a20decb1d8db6ec3c19c16417738fd',
+            'sha256_manpages': 'e9c123463abd05e142defe44a8060ce6e9853dfd8c83b2542e38b7deac4e6d4c'
+        },
         {
             'version': '2.19.2',
             'sha256': 'db893ad69c9ac9498b09677c5839787eba2eb3b7ef2bc30bfba7e62e77cf7850',
@@ -163,9 +178,10 @@ class Git(AutotoolsPackage):
     depends_on('expat')
     depends_on('gettext')
     depends_on('libiconv')
+    depends_on('libidn2')
     depends_on('openssl')
     depends_on('pcre', when='@:2.13')
-    depends_on('pcre+jit', when='@2.14:')
+    depends_on('pcre2', when='@2.14:')
     depends_on('perl')
     depends_on('zlib')
 
@@ -175,13 +191,13 @@ class Git(AutotoolsPackage):
     depends_on('m4',       type='build')
     depends_on('tk',       type=('build', 'link'), when='+tcltk')
 
-    # See the comment in setup_environment re EXTLIBS.
+    # See the comment in setup_build_environment re EXTLIBS.
     def patch(self):
         filter_file(r'^EXTLIBS =$',
                     '#EXTLIBS =',
                     'Makefile')
 
-    def setup_environment(self, spack_env, run_env):
+    def setup_build_environment(self, env):
         # We use EXTLIBS rather than LDFLAGS so that git's Makefile
         # inserts the information into the proper place in the link commands
         # (alongside the # other libraries/paths that configure discovers).
@@ -194,9 +210,9 @@ class Git(AutotoolsPackage):
         # In that case the node in the DAG gets truncated and git DOES NOT
         # have a gettext dependency.
         if 'gettext' in self.spec:
-            spack_env.append_flags('EXTLIBS', '-L{0} -lintl'.format(
+            env.append_flags('EXTLIBS', '-L{0} -lintl'.format(
                 self.spec['gettext'].prefix.lib))
-            spack_env.append_flags('CFLAGS', '-I{0}'.format(
+            env.append_flags('CFLAGS', '-I{0}'.format(
                 self.spec['gettext'].prefix.include))
 
     def configure_args(self):
@@ -206,12 +222,17 @@ class Git(AutotoolsPackage):
             '--with-curl={0}'.format(spec['curl'].prefix),
             '--with-expat={0}'.format(spec['expat'].prefix),
             '--with-iconv={0}'.format(spec['libiconv'].prefix),
-            '--with-libpcre={0}'.format(spec['pcre'].prefix),
             '--with-openssl={0}'.format(spec['openssl'].prefix),
             '--with-perl={0}'.format(spec['perl'].command.path),
             '--with-zlib={0}'.format(spec['zlib'].prefix),
         ]
 
+        if '^pcre' in self.spec:
+            configure_args.append('--with-libpcre={0}'.format(
+                spec['pcre'].prefix))
+        if '^pcre2' in self.spec:
+            configure_args.append('--with-libpcre2={0}'.format(
+                spec['pcre2'].prefix))
         if '+tcltk' in self.spec:
             configure_args.append('--with-tcltk={0}'.format(
                 self.spec['tk'].prefix.bin.wish))

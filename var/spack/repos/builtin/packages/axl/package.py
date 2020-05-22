@@ -1,4 +1,4 @@
-# Copyright 2013-2018 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -7,7 +7,7 @@ from spack import *
 from spack.error import SpackError
 
 
-def async_api_validator(values):
+def async_api_validator(pkg_name, variant_name, values):
     if 'none' in values and len(values) != 1:
         raise SpackError("The value 'none' is not usable"
                          " with other async_api values.")
@@ -20,7 +20,7 @@ class Axl(CMakePackage):
     """Asynchronous transfer library"""
 
     homepage = "https://github.com/ECP-VeloC/AXL"
-    url      = "https://github.com/ECP-VeloC/AXL/archive/v0.1.0.zip"
+    url      = "https://github.com/ECP-VeloC/AXL/archive/v0.1.1.zip"
     git      = "https://github.com/ecp-veloc/axl.git"
 
     tags = ['ecp']
