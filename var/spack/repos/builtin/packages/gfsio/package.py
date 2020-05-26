@@ -28,15 +28,14 @@ class Gfsio(CMakePackage):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://www.example.com"
-    git      = "gerrit:NCEPLIBS-gfsio"
+    git      = "git@github.com:NOAA-EMC/NCEPLIBS-gfsio"
 
     # FIXME: Add proper versions and checksums here.
     # version('1.2.3', '0123456789abcdef0123456789abcdef')
-    version('v1.1.0',  branch='spack-build')
+    version('v1.1.0',  branch='release/public-v1',submodules=True)
 
     # FIXME: Add dependencies if required.
     depends_on('ip')
-    depends_on('ip2')
     depends_on('nemsiogfs')
     depends_on('prod-util')
     depends_on('crtm')

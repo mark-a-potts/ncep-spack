@@ -28,15 +28,16 @@ class Post(CMakePackage):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://www.example.com"
-    git = "gerrit:EMC_post"
+    git = "git@github.com:NOAA-EMC/EMC_post"
 
     # FIXME: Add proper versions and checksums here.
     # version('1.2.3', '0123456789abcdef0123456789abcdef')
-    version('8.1.0', branch='spack-build', submodules=False)
+    version('8.1.0', branch='release/public-v1', submodules=True)
 
     # FIXME: Add dependencies if required.
-    depends_on('hdf5+cxx+fortran+hl+mpi')
-    depends_on('cmake@3.13.1')
+    depends_on('hdf5+hl+mpi')
+#   depends_on('hdf5+cxx+hl+mpi')
+    depends_on('cmake')
     depends_on('netcdf')
     depends_on('netcdf-fortran')
     depends_on('jasper')
@@ -55,7 +56,7 @@ class Post(CMakePackage):
     depends_on('w3nco')
     depends_on('w3emc')
     depends_on('grib-util')
-    depends_on('esmf@8.0.0b')
+    depends_on('esmf@8.0.0')
 
     def cmake_args(self):
         # FIXME: Add arguments other than

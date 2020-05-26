@@ -28,7 +28,7 @@ class Bacio4(AutotoolsPackage):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://www.example.com"
-    git      = "gerrit:NCEPLIBS-bacio"
+    git      = "git@github.com:NOAA-EMC/NCEPLIBS-bacio"
 
     # FIXME: Add proper versions and checksums here.
     version('master',  branch='master')

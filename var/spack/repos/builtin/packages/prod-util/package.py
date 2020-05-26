@@ -28,10 +28,10 @@ class ProdUtil(CMakePackage):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://www.example.com"
-    git      = "gerrit:NCEPLIBS-prod_util"
+    git      = "git@github.com:mark-a-potts/NCEPLIBS-prod_util"
 
     # FIXME: Add proper versions and checksums here.
-    version('1.0.18', branch='spack-build')
+    version('1.0.18', branch='release/public-v1',submodules=True)
 
     # FIXME: Add dependencies if required.
     depends_on('w3nco')

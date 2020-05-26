@@ -28,10 +28,10 @@ class Gsi(CMakePackage):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "https://vlab.ncep.noaa.gov/redmine/projects/comgsi"
-    git      = "gerrit:ProdGSI"
+    git      = "git@github.com:NOAA-EMC/ProdGSI"
 
 #   version('master', branch='hera-build', submodules=True)
-    version('master', branch='spack-build', submodules=True)
+    version('master', branch='release/public-v1', submodules=True)
 
 #   parallel = False
 #   depends_on('gcc')

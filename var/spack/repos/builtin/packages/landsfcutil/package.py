@@ -28,11 +28,11 @@ class Landsfcutil(CMakePackage):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://www.example.com"
-    git      = "gerrit:NCEPLIBS-landsfcutil"
+    git      = "git@github.com:NOAA-EMC/NCEPLIBS-landsfcutil"
 
     # FIXME: Add proper versions and checksums here.
     # version('1.2.3', '0123456789abcdef0123456789abcdef')
-    version('v2.1.0', branch='spack-build')
+    version('v2.1.0', branch='release/public-v1')
 
     # FIXME: Add dependencies if required.
     # depends_on('foo')
