@@ -28,18 +28,21 @@ class Nceplibs(CMakePackage):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://www.example.com"
-    git = "gerrit:NCEPLIBS"
+    url      = "http://www.example.com/example-1.2.3.tar.gz"
+    git      = "git@github.com:mark-a-potts/NCEPLIBS"
 
     # FIXME: Add proper versions and checksums here.
-    # version('1.2.3', '0123456789abcdef0123456789abcdef')
-    version('v1.0',  branch='spack-build',submodules=True)
+    version('v1.0.0',  branch='gsi-update', submodules=True)
 
     # FIXME: Add dependencies if required.
-    # depends_on('foo')
+    depends_on('mpi')
+    depends_on('netcdf')
+    depends_on('netcdf-fortran')
+    depends_on('hdf5')
 
     def cmake_args(self):
         # FIXME: Add arguments other than
         # FIXME: CMAKE_INSTALL_PREFIX and CMAKE_BUILD_TYPE
         # FIXME: If not needed delete this function
-        args = ['-DCMAKE_BUILD_TYPE=RELEASE']
+        args = ['-DBUILD_FOR_GSI=ON']
         return args

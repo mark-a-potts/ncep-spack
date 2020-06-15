@@ -28,19 +28,19 @@ class Bufr(CMakePackage):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://www.example.com"
-    git      = "gerrit:NCEPLIBS-bufr"
+    git      = "git@github.com:mark-a-potts/NCEPLIBS-bufr"
 
     # FIXME: Add proper versions and checksums here.
     # version('1.2.3', '0123456789abcdef0123456789abcdef')
-    version('v11.2.0',  branch='spack-build')
+    version('v11.3.0',  branch='gsi-update')
 
     # FIXME: Add dependencies if required.
     # depends_on('foo')
-    parallel = False
+    parallel = True
 
     def cmake_args(self):
         # FIXME: Add arguments other than
         # FIXME: CMAKE_INSTALL_PREFIX and CMAKE_BUILD_TYPE
         # FIXME: If not needed delete this function
-        args = ['-DCMAKE_BUILD_TYPE=RELEASE','-DGSIBUILD=FALSE']
+        args = ['-DCMAKE_BUILD_TYPE=RELEASE','-DGSIBUILD=TRUE']
         return args
