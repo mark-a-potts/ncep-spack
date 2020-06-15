@@ -1,7 +1,10 @@
-# Copyright 2013-2018 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
+
+# Maintainer comments:
+# 18/12/2018: fix python detection
 
 from spack import *
 
@@ -26,12 +29,13 @@ class Tfel(CMakePackage):
     """
 
     homepage = "http://tfel.sourceforge.net"
-    url      = "https://github.com/thelfer/tfel/archive/TFEL-3.2.0.tar.gz"
+    url      = "https://github.com/thelfer/tfel/archive/TFEL-3.3.0.tar.gz"
     git      = "https://github.com/thelfer/tfel.git"
     maintainers = ['thelfer']
 
     # development branches
     version("master", branch="master")
+    version("rliv-3.3", branch="rliv-3.3")
     version("rliv-3.2", branch="rliv-3.2")
     version("rliv-3.1", branch="rliv-3.1")
     version("rliv-3.0", branch="rliv-3.0")
@@ -39,11 +43,18 @@ class Tfel(CMakePackage):
     version("rliv-1.2", branch="rliv-1.2")
 
     # released version
+    version('3.3.0', sha256='884ad68b0fbbededc3a602d559433c24114ae4534dc9f0a759d31ca3589dace0')
+    version('3.2.2', sha256='69b01ae0d1f9140b619aaa9135948284ff40d4654672c335e55ab4934c02eb43')
+    version('3.2.1', sha256='12786480524a7fe86889120fb334fa00211dfd44ad5ec71e2279e7adf1ddc807')
     version('3.2.0', sha256='089d79745e9f267a2bd03dcd8841d484e668bd27f5cc2ff7453634cb39016848')
+    version('3.1.5', sha256='e22cf2110f19666f004b8acda32e87beae74721f82e7f83fd0c4fafb86812763')
+    version('3.1.4', sha256='8dc2904fc930636976baaf7e91ac89c0377afb1629c336343dfad8ab651cf87d')
     version('3.1.3', sha256='2022fa183d2c2902ada982ec6550ebe15befafcb748fd988fc9accdde7976a42')
     version('3.1.2', sha256='2eaa191f0699031786d8845ac769320a42c7e035991d82b3738289886006bfba')
     version('3.1.1', sha256='a4c0c21c6c22752cc90c82295a6bafe637b3395736c66fcdfcfe4aeccb5be7af')
     version('3.1.0', sha256='dd67b400b5f157aef503aa3615b9bf6b52333876a29e75966f94ee3f79ab37ad')
+    version('3.0.5', sha256='abf58f87962cf98b6129e873a841819a2a751f2ebd4e08490eb89fb933cd7887')
+    version('3.0.4', sha256='e832d421a0dc9f315c60c5ea23f958dcaa299913c50a4eb73bde0e053067a3cc')
     version('3.0.3', sha256='3ff1c14bcc27e9b615aab5748eaf3afac349050b27b55a2b57648aba28b801ac')
     version('3.0.2', sha256='edd54ac652e99621410137ea2f7f90f133067615a17840440690365e2c3906f5')
     version('3.0.1', sha256='fa239ddd353431954f2ab7443cf85d86c862433e72f7685c1b933ae12dbde435')
@@ -75,22 +86,61 @@ class Tfel(CMakePackage):
     variant('java', default=False,
             description='Enables java interface')
 
+    # only since TFEL-3.3, no effect on version below
+    variant('comsol', default=True,
+            description='Enables comsol interface')
+    variant('diana-fea', default=True,
+            description='Enables DIANA-FEA interface')
+
+    variant('build_type', default='Release',
+            description='The build type to build',
+            values=('Debug', 'Release'))
+
     depends_on('java', when='+java')
-    depends_on('python', when='+python')
-    depends_on('python', when='+python_bindings')
+    depends_on('python', when='+python',
+               type=('build', 'link', 'run'))
+    depends_on('python', when='+python_bindings',
+               type=('build', 'link', 'run'))
     depends_on('boost+python', when='+python_bindings')
+
+    extends('python', when='+python_bindings')
 
     def cmake_args(self):
 
         args = []
 
-        for i in ['fortran', 'java', 'castem', 'aster',
-                  'abaqus', 'calculix', 'ansys',
-                  'europlexus', 'cyrano', 'lsdyna',
-                  'python', 'python_bindings']:
+        for i in ['fortran', 'java', 'aster', 'abaqus', 'calculix',
+                  'ansys', 'europlexus', 'cyrano', 'lsdyna', 'python',
+                  'comsol', 'diana-fea']:
             if '+' + i in self.spec:
                 args.append("-Denable-{0}=ON".format(i))
             else:
                 args.append("-Denable-{0}=OFF".format(i))
+
+        if '+castem' in self.spec:
+            args.append("-Dlocal-castem-header=ON")
+        else:
+            args.append("-Dlocal-castem-header=OFF")
+
+        if '+python_bindings' in self.spec:
+            args.append("-Denable-python-bindings=ON")
+        else:
+            args.append("-Denable-python-bindings=OFF")
+
+        if(('+python' in self.spec) or
+           ('+python_bindings' in self.spec)):
+            python = self.spec['python']
+            args.append('-DPYTHON_LIBRARY={0}'.
+                        format(python.libs[0]))
+            args.append('-DPYTHON_INCLUDE_DIR={0}'.
+                        format(python.headers.directories[0]))
+            args.append('-DPython_ADDITIONAL_VERSIONS={0}'.
+                        format(python.version.up_to(2)))
+
+        if '+python_bindings' in self.spec:
+            args.append('-DBOOST_ROOT={0}'.
+                        format(self.spec['boost'].prefix))
+            args.append('-DBoost_NO_SYSTEM_PATHS=ON')
+            args.append('-DBoost_NO_BOOST_CMAKE=ON')
 
         return args

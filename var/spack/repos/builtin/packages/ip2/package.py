@@ -28,11 +28,11 @@ class Ip2(CMakePackage):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://www.example.com"
-    git      = "gerrit:NCEPLIBS-ip2"
+    git      = "git@github.com:NOAA-EMC/NCEPLIBS-ip2"
 
     # FIXME: Add proper versions and checksums here.
     # version('1.2.3', '0123456789abcdef0123456789abcdef')
-    version('v1.0', branch='spack-build')
+    version('v1.0', branch='release/public-v1')
 
     # FIXME: Add dependencies if required.
     # depends_on('foo')
